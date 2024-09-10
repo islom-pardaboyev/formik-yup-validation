@@ -2,12 +2,8 @@ import React from "react";
 import LoginImg from "./assets/login.jpeg";
 import { useFormik } from "formik";
 import { formSchema } from "./schemas";
+import toast from "react-hot-toast";
 
-const onSubmit = async (values, actions) => {
-  console.log(values);
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  actions.resetForm();
-};
 
 function App() {
   const {
@@ -26,7 +22,10 @@ function App() {
       confirmPassword: "",
     },
     validationSchema: formSchema,
-    onSubmit,
+    onSubmit: (value, action) => {
+      setTimeout(() => action.resetForm(), 800)
+      toast.success("You just logged in")
+    }
   });
   console.log(errors);
 
