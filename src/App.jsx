@@ -3,11 +3,10 @@ import LoginImg from "./assets/login.jpeg";
 import { useFormik } from "formik";
 import { formSchema } from "./schemas";
 
-const onSubmit = async(values, actions) => {
-  console.log(values), console.log(actions);
- await new Promise((resolve) => setTimeout(resolve, 1000))
-  console.log("submitted");
-  actions.resetForm()
+const onSubmit = async (values, actions) => {
+  console.log(values);
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  actions.resetForm();
 };
 
 function App() {
@@ -24,6 +23,7 @@ function App() {
       userName: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
     validationSchema: formSchema,
     onSubmit,
@@ -41,7 +41,7 @@ function App() {
         <div className="col-span-6 h-full p-10">
           <h1 className="text-center font-medium text-3xl">Form Validation</h1>
           <div className="flex flex-col gap-5">
-            <label htmlFor="" className="flex flex-col ">
+            <label htmlFor="userName" className="flex flex-col ">
               <span>User Name</span>
               <input
                 id="userName"
@@ -51,7 +51,7 @@ function App() {
                 type="text"
                 className={`p-2 border ${
                   errors.userName && touched.userName
-                    ? "!border-red-500 focus:!border-red-500"
+                    ? "!border-red-500 placeholder:text-red-500 focus:!border-red-500"
                     : "border-black/20 focus:border-black"
                 }  outline-none rounded`}
                 placeholder="User Name"
@@ -60,7 +60,7 @@ function App() {
                 <p className="text-red-500">{errors.userName}</p>
               )}
             </label>
-            <label htmlFor="" className="flex flex-col ">
+            <label htmlFor="email" className="flex flex-col ">
               <span>Email</span>
               <input
                 id="email"
@@ -70,16 +70,16 @@ function App() {
                 type="email"
                 className={`p-2 border ${
                   errors.email && touched.email
-                    ? "!border-red-500 focus:!border-red-500"
+                    ? "!border-red-500 placeholder:text-red-500 focus:!border-red-500"
                     : "border-black/20 focus:border-black"
                 }  outline-none rounded`}
                 placeholder="Email"
               />
-              {errors.userName && touched.userName && (
+              {errors.email && touched.email && (
                 <p className="text-red-500">{errors.email}</p>
               )}
             </label>
-            <label htmlFor="" className="flex flex-col ">
+            <label htmlFor="password" className="flex flex-col ">
               <span>Password</span>
               <input
                 id="password"
@@ -89,13 +89,32 @@ function App() {
                 type="password"
                 className={`p-2 border ${
                   errors.password && touched.password
-                    ? "!border-red-500 focus:!border-red-500"
+                    ? "!border-red-500 placeholder:text-red-500 focus:!border-red-500"
                     : "border-black/20 focus:border-black"
                 }  outline-none rounded`}
                 placeholder="Password"
               />
               {errors.password && touched.password && (
                 <p className="text-red-500">{errors.password}</p>
+              )}
+            </label>
+            <label htmlFor="confirmPassword" className="flex flex-col ">
+              <span>Confirm Password</span>
+              <input
+                id="confirmPassword"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.confirmPassword}
+                type="password"
+                className={`p-2 border ${
+                  errors.confirmPassword && touched.confirmPassword
+                    ? "!border-red-500 placeholder:text-red-500 focus:!border-red-500"
+                    : "border-black/20 focus:border-black"
+                }  outline-none rounded`}
+                placeholder="Confirm Password"
+              />
+              {errors.confirmPassword && touched.confirmPassword && (
+                <p className="text-red-500">{errors.confirmPassword}</p>
               )}
             </label>
           </div>
@@ -110,7 +129,7 @@ function App() {
           <img
             src={LoginImg}
             className="absolute top-0 left-0 w-full h-full object-cover"
-            alt=""
+            alt="Login"
           />
         </div>
       </form>
